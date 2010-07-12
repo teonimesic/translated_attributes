@@ -2,10 +2,11 @@ require 'rake'
 require 'rspec/core/rake_task'
 
 begin
+  username = 'teonimesic'
   project_name = 'translated_attributes'
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = project_name
+    gem.name = "#{username}-#{project_name}"
     gem.summary = "An adaptation of grossers's translatable attributes"
     gem.email = "stefano.diem@gmail.com"
     gem.homepage = "http://github.com/teonimesic/#{project_name}"
