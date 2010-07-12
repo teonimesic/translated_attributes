@@ -8,18 +8,20 @@ Gem::Specification.new do |s|
   s.version = "0.5.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Michael Grosser"]
-  s.date = %q{2010-06-07}
-  s.email = %q{grosser.michael@gmail.com}
+  s.authors = ["Michael Grosser", "Stefano Diem Benatti"]
+  s.date = %q{2010-07-12}
+  s.email = %q{stefano.diem@gmail.com}
   s.extra_rdoc_files = [
     "README.markdown"
   ]
   s.files = [
-    "MIGRATION",
-     "README.markdown",
+    "README.markdown",
      "Rakefile",
      "VERSION",
      "init.rb",
+     "lib/generators/translated_attributes/USAGE",
+     "lib/generators/translated_attributes/templates/migration.rb",
+     "lib/generators/translated_attributes/translated_attributes_generator.rb",
      "lib/translated_attributes.rb",
      "spec/integration_spec.rb",
      "spec/models.rb",
@@ -27,29 +29,29 @@ Gem::Specification.new do |s|
      "spec/translated_attributes_spec.rb",
      "translated_attributes.gemspec"
   ]
-  s.homepage = %q{http://github.com/grosser/translated_attributes}
+  s.homepage = %q{http://github.com/teonimesic/translated_attributes}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{ActiveRecord/Rails simple translatable attributes}
+  s.rubygems_version = %q{1.3.7}
+  s.summary = %q{An adaptation of grossers's translatable attributes}
   s.test_files = [
-    "spec/models.rb",
-     "spec/translated_attributes_spec.rb",
-     "spec/integration_spec.rb",
-     "spec/spec_helper.rb"
+    "spec/integration_spec.rb",
+     "spec/models.rb",
+     "spec/spec_helper.rb",
+     "spec/translated_attributes_spec.rb"
   ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activerecord>, [">= 0"])
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<["activerecord", "rspec"]>, [">= 0"])
     else
-      s.add_dependency(%q<activerecord>, [">= 0"])
+      s.add_dependency(%q<["activerecord", "rspec"]>, [">= 0"])
     end
   else
-    s.add_dependency(%q<activerecord>, [">= 0"])
+    s.add_dependency(%q<["activerecord", "rspec"]>, [">= 0"])
   end
 end
 
