@@ -50,6 +50,26 @@ module TranslatedAttributes
 
       base.after_save :store_translated_attributes
     end
+    
+    def attributes=(new_attributes, *args)
+      if I18n.available_locales.any?{|locale| new_attributes.stringify_keys.include? locale.to_s }
+        non_serialized_attributes = new_attributes
+        I18n.available_locales.each do |l|
+          new_attributes = get_language_attributes(l,non_serialized_attributes)
+          self.class.language(l){ super }
+        end
+      else
+        super
+      end
+    end
+
+    def get_language_attributes(lang, params)
+      local_params = {}
+      if (params.include?(lang) || params.include?(lang.to_s) ) && I18n.available_locales.include?(lang.to_sym)
+        local_params = params.stringify_keys[lang.to_s]
+      end
+      params.reject{|k,v| I18n.available_locales.include? k.to_sym }.merge(local_params)
+    end
 
     def get_translated_attribute(locale, field)
       text = if locale
@@ -88,7 +108,7 @@ module TranslatedAttributes
     end
 
     def translated_attributes= hash
-      @db_translations_merged = true #do not overwrite what we set here
+      @db_translations_merged = false #overwrite what we set here
       @translated_attributes_changed = true #store changes we made
       @translated_attributes = hash.with_indifferent_access
     end
@@ -117,7 +137,7 @@ module TranslatedAttributes
         attributes.each do |attribute, value|
           next if value.blank?
           next unless self.class.translated_attributes_options[:fields].include? attribute.to_sym
-          translations.create!(:attribute=>attribute, :text=>value, :language=>locale)
+          translations.create!(:attr=>attribute, :text=>value, :language=>locale)
         end
       end
       @translated_attributes_changed = false
@@ -129,7 +149,7 @@ module TranslatedAttributes
       return if new_record? or @db_translations_merged
       @db_translations_merged = true
       translations.each do |t|
-        translated_attributes_for(t.language)[t.attribute] = t.text
+        translated_attributes_for(t.language)[t.attr] = t.text
       end
     end
 
