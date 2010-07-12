@@ -7,10 +7,10 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = project_name
-    gem.summary = "ActiveRecord/Rails simple translatable attributes"
-    gem.email = "grosser.michael@gmail.com"
-    gem.homepage = "http://github.com/grosser/#{project_name}"
-    gem.authors = ["Michael Grosser"]
+    gem.summary = "An adaptation of grossers's translatable attributes"
+    gem.email = "stefano.diem@gmail.com"
+    gem.homepage = "http://github.com/teonimesic/#{project_name}"
+    gem.authors = ["Michael Grosser","Stefano Diem Benatti"]
     gem.add_dependency ['activerecord']
   end
 
