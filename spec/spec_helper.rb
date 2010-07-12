@@ -1,9 +1,9 @@
 # ---- requirements
 require 'rubygems'
-require 'spec'
+require 'rspec'
 require 'active_record'
 
-$LOAD_PATH << File.expand_path("../lib", File.dirname(__FILE__))
+$:.unshift File.expand_path('../lib', __FILE__)
 
 # ---- setup environment/plugin
 ActiveRecord::Base.establish_connection({
@@ -15,4 +15,3 @@ ActiveRecord::Base.establish_connection({
 
 require File.expand_path("../init", File.dirname(__FILE__))
 
-require 'spec/models'

@@ -1,4 +1,5 @@
-require 'spec/spec_helper'
+require_relative 'spec_helper'
+require_relative 'models' 
 
 describe 'Translated attributes' do
   before do
