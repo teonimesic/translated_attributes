@@ -12,7 +12,7 @@ begin
     gem.homepage = "http://github.com/teonimesic/#{project_name}"
     gem.authors = ["Michael Grosser","Stefano Diem Benatti"]
     gem.add_dependency 'activerecord', '>= 3.0.0.beta4'
-    gem.add_dependency 'rspec-core', '>= 2.0.0.beta.13'
+    gem.add_development_dependency "rspec-core", ">= 2.0.0.beta.13"
   end
 
   Jeweler::GemcutterTasks.new

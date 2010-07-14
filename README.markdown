@@ -1,4 +1,4 @@
-This is an adaptation on Michael Grosser's translated attributes, but lightly adapted for rails 3 and my own needs.
+This is an adaptation on Michael Grosser's translated attributes, but lightly adapted for rails 3 and ruby 1.9 and my own needs, and it may not work properly with older versions.
 
 Rails plugin/ActiveRecord gem that creates 'virtual' attributes, which can be added on the fly without overhead or migrations, while storing all the data in a never-changing translations table.
 This keeps the attatched model light and allows to add/remove fields on the fly without migrations.

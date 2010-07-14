@@ -3,7 +3,7 @@ require 'rubygems'
 require 'rspec'
 require 'active_record'
 
-$:.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 
 # ---- setup environment/plugin
 ActiveRecord::Base.establish_connection({
