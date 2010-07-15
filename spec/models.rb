@@ -7,12 +7,13 @@ ActiveRecord::Schema.define(:version => 1) do
 
   %w[translations user_translations].each do |table|
     create_table table do |t|
-      t.references :translatable, :null=>false
+      t.belongs_to :translatable, :null=>false
       t.string :translatable_type, :limit=>40, :null=>false
       t.string :language, :limit=>2, :null=>false
-      t.string :attr, :limit=>40, :null=>false
+      t.string :translated_attribute, :limit=>40, :null=>false
       t.text :text, :null=>false
     end
+    #add_index :translations, [:translatable_id, :translatable_type]
   end
 end
 

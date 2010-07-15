@@ -125,7 +125,7 @@ module TranslatedAttributes
         attributes.each do |attribute, value|
           next if value.blank?
           next unless self.class.translated_attributes_options[:fields].include? attribute.to_sym
-          translations.create!(:attr=>attribute, :text=>value, :language=>locale)
+          translations.create!(:translated_attribute=>attribute, :text=>value, :language=>locale)
         end
       end
       @translated_attributes_changed = false
@@ -137,7 +137,7 @@ module TranslatedAttributes
       return if new_record? or @db_translations_merged
       @db_translations_merged = true
       translations.each do |t|
-        translated_attributes_for(t.language)[t.attr] = t.text
+        translated_attributes_for(t.language)[t.translated_attribute] = t.text
       end
     end
 
