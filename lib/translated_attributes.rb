@@ -52,23 +52,11 @@ module TranslatedAttributes
     end
     
     def attributes=(new_attributes, *args)
-      if I18n.available_locales.any?{|locale| new_attributes.stringify_keys.include? locale.to_s }
-        non_serialized_attributes = new_attributes
-        I18n.available_locales.each do |l|
-          new_attributes = get_language_attributes(l,non_serialized_attributes)
-          self.class.language(l){ super }
-        end
-      else
-        super
+      unless ( translations_hash = new_attributes.select{|k,v| is_translated_attribute_hash?(k) } ).blank?
+        @translated_attributes = translations_hash.with_indifferent_access
+        new_attributes.delete_if{|k,v| is_translated_attribute_hash?(k) }
       end
-    end
-
-    def get_language_attributes(lang, params)
-      local_params = {}
-      if (params.include?(lang) || params.include?(lang.to_s) ) && I18n.available_locales.include?(lang.to_sym)
-        local_params = params.stringify_keys[lang.to_s]
-      end
-      params.reject{|k,v| I18n.available_locales.include? k.to_sym }.merge(local_params)
+      super
     end
 
     def get_translated_attribute(locale, field)
@@ -163,6 +151,10 @@ module TranslatedAttributes
     def is_translated_attribute?(method_name)
       fields = self.class.translated_attributes_options[:fields]
       fields.include? method_name.sub('=','').to_sym
+    end
+    
+    def is_translated_attribute_hash?(key)
+      I18n.available_locales.include?(key.to_s) || I18n.available_locales.include?(key.to_sym)
     end
 
     def translated_attributes_for(locale)

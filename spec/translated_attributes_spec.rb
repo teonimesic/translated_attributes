@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require_relative 'spec_helper'
 require_relative 'models' 
 
@@ -25,7 +27,7 @@ describe 'Translated attributes' do
       p.title.should == 'def'
     end
 
-    it "ca be unset" do
+    it "can be unset" do
       p = Product.new
       p.title = 'abc'
       p.title = nil
@@ -45,6 +47,21 @@ describe 'Translated attributes' do
       I18n.locale = :de
       p.title = 'bcd'
       p.title_in_de.should == 'bcd'
+    end
+    
+    it "can be set in a hash flavour syntax" do
+      I18n.available_locales = [:en, :pt]
+      p = Product.new(
+        en: { title: 'TitleInEn', description: 'DescriptionInEn' },
+        pt: { title: 'TítuloEmPt', description: 'DescriçãoEmPt'}
+      )
+      p.title.should == 'TitleInEn'
+      p.title_in_pt.should == 'TítuloEmPt'
+    end
+    
+    it "cannot be set in a hash flavour syntax if not present in available locales" do
+      I18n.available_locales = []
+      lambda{ Product.new( en: { title: 'TitleInEn', description: 'DescriptionInEn' } ) }.should raise_error
     end
 
     it "returns current language when current can be found" do
